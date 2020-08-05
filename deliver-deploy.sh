@@ -68,7 +68,7 @@ cd /tmp/coding-events-api/CodingEventsAPI
 # checkout branch that has the appsettings.json we need to connect to the KV
 git checkout $solution_branch
 
-# insert "40.117.177.200"
+# insert "ip"
 sed -i "s/vm_ip/$vm_ip/g" /tmp/coding-events-api/CodingEventsAPI/appsettings.json
 
 sudo dotnet publish -c Release -r linux-x64 -o "$api_working_dir"
