@@ -21,7 +21,7 @@ export HOME=/home/student
 export DOTNET_CLI_HOME=/home/student
 
 # ip
-vm_ip=public_ip
+vm_ip=52.255.192.41
 
 # -- end env vars --
 
@@ -81,6 +81,7 @@ sudo dotnet publish -c Release -r linux-x64 -o "$api_working_dir"
 sudo service coding-events-api start
 
 # -- end deploy --
+
 
 
 

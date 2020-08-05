@@ -35,17 +35,20 @@ az configure --default group=$rgName
 # VM: provision
 
 # capture vm output for splitting
-az vm create -n $vmName --size $vmSize --image $vmImage --admin-username $vmAdminUsername --admin-password $vmAdminPassword --authentication-type password --assign-identity
+az vm create -n $vmName --size $vmSize --image $vmImage --admin-username $vmAdminUsername --admin-password $vmAdminPassword --authentication-type password --assign-identity | Set-Content vm.json
+
+$vm = Get-Content .\vm.json | ConvertFrom-Json
+
 
 # set az vm default
 
 az configure --default vm=$vmName
 
 # get the (identity)
-$vmId=$(az vm identity show --query principalId)
+$vmId=$vm.identity.systemAssignedIdentity
 
 # get the (ip)
-$vmIp=$(az vm show -d --query publicIps)
+$vmIp=$vm.publicIpAddress
 
 # VM: add NSG rule for port 443 (https)
 
@@ -69,7 +72,7 @@ az keyvault set-policy --name $kvName --object-id $vmId --secret-permissions lis
 
 # VM setup-and-deploy script
 
-az vm run-command invoke --command-id RunShellScript --scripts '@.\vm-configuration-scripts\1configure-vm.sh' '@.\vm-configuration-scripts\2configure-ssl.sh' 'deliver-deploy.sh'
+az vm run-command invoke --command-id RunShellScript --scripts '@.\vm-configuration-scripts\1configure-vm.sh' '@.\vm-configuration-scripts\2configure-ssl.sh' '@.\deliver-deploy.sh'
 
 
 # finished print out IP address

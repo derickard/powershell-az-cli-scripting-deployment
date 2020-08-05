@@ -1,0 +1,15 @@
+{
+  "fqdns": "",
+  "id": "/subscriptions/658b1310-c263-47a5-8b44-be65f6a7fef1/resourceGroups/david-events-aadb2c-rg/providers/Microsoft.Compute/virtualMachines/david-events-aadb2c-vm",
+  "identity": {
+    "systemAssignedIdentity": "42029102-e612-4a65-ac4a-0f94bf8d343c",
+    "userAssignedIdentities": {}
+  },
+  "location": "eastus",
+  "macAddress": "00-0D-3A-57-C7-6A",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.4",
+  "publicIpAddress": "52.255.192.41",
+  "resourceGroup": "david-events-aadb2c-rg",
+  "zones": ""
+}
