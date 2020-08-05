@@ -21,7 +21,7 @@ export HOME=/home/student
 export DOTNET_CLI_HOME=/home/student
 
 # ip
-vm_ip=52.255.192.41
+vm_ip=public_ip
 
 # -- end env vars --
 
