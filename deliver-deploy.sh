@@ -7,10 +7,10 @@ set -ex
 # for cloning in delivery
 
 # TODO: enter your GitHub user name
-github_username=
+github_username=derickard
 
 # TODO: enter the name of your project branch that has your updated code
-solution_branch=
+solution_branch="3-aadb2c"
 
 # api
 api_service_user=api-user
@@ -19,6 +19,9 @@ api_working_dir=/opt/coding-events-api
 # needed to use dotnet from within RunCommand
 export HOME=/home/student
 export DOTNET_CLI_HOME=/home/student
+
+# ip
+vm_ip=public_ip
 
 # -- end env vars --
 
@@ -32,7 +35,7 @@ chmod 700 /opt/coding-events-api/
 chown $api_service_user /opt/coding-events-api/
 
 # generate API unit file
-cat << EOF > /etc/systemd/system/coding-events-api.service
+sudo cat << EOF > /etc/systemd/system/coding-events-api.service
 [Unit]
 Description=Coding Events API
 
@@ -65,13 +68,19 @@ cd /tmp/coding-events-api/CodingEventsAPI
 # checkout branch that has the appsettings.json we need to connect to the KV
 git checkout $solution_branch
 
-dotnet publish -c Release -r linux-x64 -o "$api_working_dir"
+# insert "40.117.177.200"
+sed -i "s/vm_ip/$vm_ip/g" /tmp/coding-events-api/CodingEventsAPI/appsettings.json
+
+sudo dotnet publish -c Release -r linux-x64 -o "$api_working_dir"
 
 # -- end deliver --
 
 # -- deploy --
 
 # start API service
-service coding-events-api start
+sudo service coding-events-api start
 
 # -- end deploy --
+
+
+

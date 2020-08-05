@@ -5,7 +5,7 @@ set -ex
 # -- env vars --
 
 export DEBIAN_FRONTEND=noninteractive
-HOME=/home/student
+export HOME=/home/student
 
 # dir where nginx will look for the SSL cert and key
 nginx_ssl_dir=/etc/nginx/external
@@ -16,7 +16,7 @@ tls_cert_path="${nginx_ssl_dir}/cert.pem"
 
 # -- install dependencies --
 
-apt-get update && apt-get install nginx -y
+sudo apt-get update && sudo apt-get install nginx -y
 
 # -- end install dependencies --
 
@@ -28,7 +28,7 @@ touch /tmp/.rnd
 # create certs dir
 mkdir "$nginx_ssl_dir"
 
-openssl req -x509 -newkey rsa:4086 \
+sudo openssl req -x509 -newkey rsa:4086 \
 -subj "/C=US/ST=Missouri/L=St. Louis/O=The LaunchCode Foundation/CN=localhost" \
 -keyout "$tls_key_path" \
 -out "$tls_cert_path" \
@@ -44,7 +44,7 @@ nginx_conf=/etc/nginx/nginx.conf
 # save default conf as a backup
 mv "$nginx_conf" "${nginx_conf}.bak"
 
-cat << EOF > "$nginx_conf"
+sudo cat << EOF > "$nginx_conf"
 events {}
 http {
   # proxy settings
@@ -105,4 +105,4 @@ http {
 EOF
 
 # reload nginx to use this new conf file
-nginx -s reload
+sudo nginx -s reload
